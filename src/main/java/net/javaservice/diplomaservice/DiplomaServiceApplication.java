@@ -7,8 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DiplomaServiceApplication {
 
 	public static void main(String[] args) {
-		System.out.print("aboba");
 		SpringApplication.run(DiplomaServiceApplication.class, args);
 	}
-
 }

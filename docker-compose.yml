@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  mysqldb:
+    platform: linux/amd64
+    image: "mysql:5.7"
+    restart: always
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_DATABASE: diplomaServer
+      MYSQL_USER: sacha
+      MYSQL_PASSWORD: warface567
+      MYSQL_ROOT_PASSWORD: warface567
