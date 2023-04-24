@@ -1,7 +1,7 @@
 package net.javaservice.diplomaservice.configuration;
 
 import lombok.RequiredArgsConstructor;
-import net.javaservice.diplomaservice.repository.UserRepository;
+import net.javaservice.diplomaservice.authorization.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

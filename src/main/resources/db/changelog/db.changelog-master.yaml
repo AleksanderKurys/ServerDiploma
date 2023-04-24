@@ -1,5 +1,7 @@
 databaseChangeLog:
   - include:
-      file: db/changelog/V1__init_database.sql
-#  - include:
-#      file: db/changelog/create_table_aboba.sql
+      file: db/changelog/create_table_user.sql
+  - include:
+      file: db/changelog/create_table_tag.sql
+  - include:
+      file: db/changelog/create_table_event.sql
