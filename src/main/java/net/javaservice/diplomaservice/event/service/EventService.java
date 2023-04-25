@@ -1,6 +1,7 @@
 package net.javaservice.diplomaservice.event.service;
 
 import lombok.RequiredArgsConstructor;
+import net.javaservice.diplomaservice.event.entity.Event;
 import net.javaservice.diplomaservice.event.repository.EventRepository;
 import net.javaservice.diplomaservice.event.response.EventResponse;
 import org.springframework.data.domain.PageRequest;
@@ -19,21 +20,11 @@ public class EventService {
         var events = repository.findAll(firstPageWithTwoElements).toList();
 
         ArrayList<EventResponse> listEventResponse = new ArrayList<EventResponse>();
-        EventResponse eventResponse = new EventResponse();
 
         for(int i = 0; i < events.size(); i++) {
             var event = events.get(i);
 
-            eventResponse.setTitle(event.getTitle());
-            eventResponse.setAvatar(event.getAvatar());
-            eventResponse.setDescription(event.getDescription());
-            eventResponse.setDatetime(event.getDatetime());
-            eventResponse.setLatitude(event.getLatitude());
-            eventResponse.setTags(event.getTags());
-            eventResponse.setImages(event.getImages());
-            eventResponse.setLongitude(event.getLongitude());
-            eventResponse.setCount_person(event.getCount_person());
-            listEventResponse.add(i, eventResponse);
+            listEventResponse.add(i, convertToEventResponse(event));
         }
 
         return listEventResponse;
@@ -41,18 +32,35 @@ public class EventService {
 
     public EventResponse getEvent(Integer id) {
         var event = repository.findById(id);
+
+        return convertToEventResponse(event.get());
+    }
+
+
+    public ArrayList<EventResponse> searchEventOnText(String title) {
+        var events = repository.findByEventOnText(title);
+        ArrayList<EventResponse> listEventResponse = new ArrayList<EventResponse>();
+
+        for(int i=0; i<events.size(); i++) {
+            var event = events.get(i);
+            listEventResponse.add(i, convertToEventResponse(event));
+        }
+
+        return listEventResponse;
+    }
+
+    private EventResponse convertToEventResponse(Event event) {
         EventResponse eventResponse = new EventResponse();
-
-        eventResponse.setTitle(event.get().getTitle());
-        eventResponse.setAvatar(event.get().getAvatar());
-        eventResponse.setDescription(event.get().getDescription());
-        eventResponse.setDatetime(event.get().getDatetime());
-        eventResponse.setLatitude(event.get().getLatitude());
-        eventResponse.setTags(event.get().getTags());
-        eventResponse.setImages(event.get().getImages());
-        eventResponse.setLongitude(event.get().getLongitude());
-        eventResponse.setCount_person(event.get().getCount_person());
-
+        eventResponse.setId(event.getId());
+        eventResponse.setTitle(event.getTitle());
+        eventResponse.setAvatar(event.getAvatar());
+        eventResponse.setDescription(event.getDescription());
+        eventResponse.setDatetime(event.getDatetime());
+        eventResponse.setLatitude(event.getLatitude());
+        eventResponse.setTags(event.getTags());
+        eventResponse.setImages(event.getImages());
+        eventResponse.setLongitude(event.getLongitude());
+        eventResponse.setCount_person(event.getCountPerson());
         return eventResponse;
     }
 }

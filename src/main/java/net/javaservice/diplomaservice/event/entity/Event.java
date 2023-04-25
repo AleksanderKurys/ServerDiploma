@@ -19,7 +19,10 @@ public class Event {
     private int id;
     private String title;
     private String avatar;
-    private Integer count_person;
+    @Column(name = "count_person")
+    private Integer countPerson;
+    @Column(name = "count_max")
+    private Integer countMax;
     private String description;
     private double latitude;
     private double longitude;

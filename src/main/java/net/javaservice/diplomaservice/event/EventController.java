@@ -28,4 +28,11 @@ public class EventController {
     ) {
         return ResponseEntity.ok(service.getEvent(id));
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<ArrayList<EventResponse>> searchEvent (
+            @RequestParam String title
+    ) {
+        return ResponseEntity.ok(service.searchEventOnText(title));
+    }
 }
