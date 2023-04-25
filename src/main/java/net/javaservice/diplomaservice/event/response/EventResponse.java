@@ -1,14 +1,12 @@
 package net.javaservice.diplomaservice.event.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import net.javaservice.diplomaservice.event.entity.Image;
 import net.javaservice.diplomaservice.event.entity.Tag;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
-
 
 @Data
 @Builder
@@ -24,4 +22,5 @@ public class EventResponse {
     private double longitude;
     private Date datetime;
     private Set<Tag> tags;
+    private List<Image> images;
 }

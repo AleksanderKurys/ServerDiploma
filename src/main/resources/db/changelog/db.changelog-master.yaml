@@ -7,3 +7,13 @@ databaseChangeLog:
       file: db/changelog/create_table_event.sql
   - include:
       file: db/changelog/create_table_event_tag.sql
+  - include:
+      file: db/changelog/create_table_image.sql
+  - include:
+      file: db/changelog/insert_event_data.sql
+  - include:
+      file: db/changelog/insert_image_data.sql
+  - include:
+      file: db/changelog/insert_tag_data.sql
+  - include:
+      file: db/changelog/insert_event_tags_data.sql

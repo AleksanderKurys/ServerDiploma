@@ -22,7 +22,7 @@ public class EventService {
         EventResponse eventResponse = new EventResponse();
 
         for(int i = 0; i < events.size(); i++) {
-            var event = events.get(0);
+            var event = events.get(i);
 
             eventResponse.setTitle(event.getTitle());
             eventResponse.setAvatar(event.getAvatar());
@@ -30,6 +30,7 @@ public class EventService {
             eventResponse.setDatetime(event.getDatetime());
             eventResponse.setLatitude(event.getLatitude());
             eventResponse.setTags(event.getTags());
+            eventResponse.setImages(event.getImages());
             eventResponse.setLongitude(event.getLongitude());
             eventResponse.setCount_person(event.getCount_person());
             listEventResponse.add(i, eventResponse);
@@ -48,6 +49,7 @@ public class EventService {
         eventResponse.setDatetime(event.get().getDatetime());
         eventResponse.setLatitude(event.get().getLatitude());
         eventResponse.setTags(event.get().getTags());
+        eventResponse.setImages(event.get().getImages());
         eventResponse.setLongitude(event.get().getLongitude());
         eventResponse.setCount_person(event.get().getCount_person());
 

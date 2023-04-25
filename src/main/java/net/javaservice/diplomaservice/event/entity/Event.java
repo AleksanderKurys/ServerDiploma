@@ -1,10 +1,7 @@
 package net.javaservice.diplomaservice.event.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -16,7 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "_event")
+@Table(name = "_events")
 public class Event {
     @Id
     private int id;
@@ -26,9 +23,14 @@ public class Event {
     private String description;
     private double latitude;
     private double longitude;
+
     @Column(name = "_day")
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date datetime;
+
     @ManyToMany
     private Set<Tag> tags;
+
+    @OneToMany(targetEntity = Image.class, mappedBy = "event")
+    private List<Image> images;
 }
