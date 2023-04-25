@@ -6,7 +6,5 @@ create table _event (
     description tinytext,
     latitude float,
     longitude float,
-    _day datetime,
-    tag_id int,
-    constraint fk_event foreign key (tag_id) references _tag(id)
+    _day datetime
 );

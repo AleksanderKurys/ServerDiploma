@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.javaservice.diplomaservice.event.entity.Tag;
+
 import java.util.Date;
 import java.util.Set;
 
@@ -21,5 +23,5 @@ public class EventResponse {
     private double latitude;
     private double longitude;
     private Date datetime;
-    private Set<String> tags;
+    private Set<Tag> tags;
 }

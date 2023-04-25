@@ -14,11 +14,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "_tag")
 public class Tag {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
-
-    @ManyToOne
-    @JoinColumn(name = "tag_id")
-    private Event event;
 }

@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/event")
@@ -15,11 +14,18 @@ import java.util.List;
 public class EventController {
     private final EventService service;
 
-    @GetMapping("/pagination")
-    public ResponseEntity<ArrayList<EventResponse>> pagination (
+    @GetMapping("/getEvents")
+    public ResponseEntity<ArrayList<EventResponse>> getEvents (
             @RequestParam Integer page,
             @RequestParam Integer size
-    ){
+    ) {
         return ResponseEntity.ok(service.getEvents(page, size));
+    }
+
+    @GetMapping("/getEvent")
+    public ResponseEntity<EventResponse> getEvent (
+            @RequestParam Integer id
+    ) {
+        return ResponseEntity.ok(service.getEvent(id));
     }
 }

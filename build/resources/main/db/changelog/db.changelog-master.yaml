@@ -5,3 +5,5 @@ databaseChangeLog:
       file: db/changelog/create_table_tag.sql
   - include:
       file: db/changelog/create_table_event.sql
+  - include:
+      file: db/changelog/create_table_event_tag.sql
