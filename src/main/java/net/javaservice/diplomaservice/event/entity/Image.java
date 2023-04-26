@@ -19,6 +19,5 @@ public class Image {
 
     @ManyToOne(targetEntity = Event.class)
     @JoinColumn(name="event_id")
-    @JsonIgnore
     private Event event;
 }

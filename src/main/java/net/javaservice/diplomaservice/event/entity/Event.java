@@ -32,7 +32,7 @@ public class Event {
     private Date datetime;
 
     @ManyToMany
-    private Set<Tag> tags;
+    private List<Tag> tags;
 
     @OneToMany(targetEntity = Image.class, mappedBy = "event")
     private List<Image> images;

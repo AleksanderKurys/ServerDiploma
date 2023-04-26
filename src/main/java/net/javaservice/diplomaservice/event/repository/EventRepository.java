@@ -5,8 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface EventRepository extends JpaRepository<Event, Integer> {
     @Query("SELECT e FROM Event e WHERE e.title LIKE %?1%")
     ArrayList<Event> findByEventOnText(String title);
+
+    List<Event> findByTags_Name(String name);
 }

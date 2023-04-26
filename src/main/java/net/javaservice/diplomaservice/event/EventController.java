@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/event")
@@ -34,5 +35,12 @@ public class EventController {
             @RequestParam String title
     ) {
         return ResponseEntity.ok(service.searchEventOnText(title));
+    }
+
+    @GetMapping("/search/tag")
+    public ResponseEntity<ArrayList<EventResponse>> searchTagEvent (
+            @RequestParam List<String> tags
+    ) {
+        return ResponseEntity.ok(service.searchEventOnTag(tags));
     }
 }
