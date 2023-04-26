@@ -1,6 +1,6 @@
 create table _image (
-    id int primary key,
+    id int primary key AUTO_INCREMENT,
     image_data varchar(255),
     event_id int,
-    constraint fk_event foreign key (event_id) REFERENCES _events(id)
+    foreign key (event_id) REFERENCES _events(id)
 );

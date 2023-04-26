@@ -23,6 +23,10 @@ public class User implements UserDetails {
     private long id;
     private String firstname;
     private String lastname;
+    private String middlename;
+    private Integer course;
+    private String department;
+    private String avatar;
     @Column(unique = true)
     private String email;
     private String password;

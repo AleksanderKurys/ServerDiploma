@@ -1,5 +1,5 @@
 create table _events (
-    id int primary key,
+    id int primary key AUTO_INCREMENT,
     title varchar(30),
     avatar varchar(255),
     count_person int,

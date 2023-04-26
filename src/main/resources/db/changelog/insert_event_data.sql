@@ -1,7 +1,6 @@
-insert into _events
+insert into _events (title, avatar, count_person, count_max, description, latitude, longitude, _day)
 values
-(0,
-"Test1",
+("Test1",
 "https://images.unsplash.com/photo-1489549132488-d00b7eee80f1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8N3x8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60",
 0,
 30,
@@ -10,8 +9,7 @@ values
 324.43,
 "2015-02-15 10:30:00"
 ),
-(1,
- "Test2",
+("Test2",
  "https://images.unsplash.com/photo-1603788988770-92e7a1b2bea5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTF8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
  123,
  200,
@@ -19,8 +17,7 @@ values
  230.32,
  324.43,
  "2015-02-15 10:30:00"),
- (2,
-  "Test3",
+ ("Test3",
   "https://images.unsplash.com/photo-1580740132087-761c25cacbf6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTd8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
   234,
   400,
