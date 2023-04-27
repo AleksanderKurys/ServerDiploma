@@ -1,6 +1,7 @@
 package net.javaservice.diplomaservice.event.service;
 
 import lombok.RequiredArgsConstructor;
+import net.javaservice.diplomaservice.authorization.repository.UserRepository;
 import net.javaservice.diplomaservice.event.entity.Event;
 import net.javaservice.diplomaservice.event.repository.EventRepository;
 import net.javaservice.diplomaservice.event.response.EventResponse;
@@ -20,6 +21,7 @@ import java.util.Set;
 public class EventService {
 
     private final EventRepository repository;
+
     public ArrayList<EventResponse> getEvents(Integer page, Integer size) {
         Pageable firstPageWithTwoElements = PageRequest.of(page, size);
         var events = repository.findAll(firstPageWithTwoElements).toList();

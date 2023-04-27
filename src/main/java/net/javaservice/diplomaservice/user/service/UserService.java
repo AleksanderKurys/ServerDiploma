@@ -47,6 +47,7 @@ public class UserService {
     public UserResponse getUserToEmail(String email) {
         var user = repository.findByEmail(email);
 
+
         return convertToUserResponse(user.get());
     }
 
