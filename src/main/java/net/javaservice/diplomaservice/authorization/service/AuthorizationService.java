@@ -8,7 +8,6 @@ import net.javaservice.diplomaservice.configuration.JwtService;
 import net.javaservice.diplomaservice.authorization.repository.UserRepository;
 import net.javaservice.diplomaservice.authorization.entity.Role;
 import net.javaservice.diplomaservice.authorization.entity.User;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

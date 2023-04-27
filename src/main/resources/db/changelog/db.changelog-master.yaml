@@ -10,6 +10,8 @@ databaseChangeLog:
   - include:
       file: db/changelog/create_table_image.sql
   - include:
+      file: db/changelog/create_table_user_event.sql
+  - include:
       file: db/changelog/insert_event_data.sql
   - include:
       file: db/changelog/insert_image_data.sql
@@ -17,3 +19,5 @@ databaseChangeLog:
       file: db/changelog/insert_tag_data.sql
   - include:
       file: db/changelog/insert_event_tags_data.sql
+  - include:
+      file: db/changelog/insert_users_events_data.sql

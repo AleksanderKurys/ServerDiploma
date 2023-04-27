@@ -2,11 +2,11 @@ package net.javaservice.diplomaservice.event.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import net.javaservice.diplomaservice.authorization.entity.UserEvent;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @Builder
@@ -30,6 +30,9 @@ public class Event {
     @Column(name = "_day")
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date datetime;
+
+    @OneToMany(mappedBy = "event")
+    private List<UserEvent> userEvent;
 
     @ManyToMany
     private List<Tag> tags;

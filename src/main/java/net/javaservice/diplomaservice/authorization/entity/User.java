@@ -35,6 +35,8 @@ public class User implements UserDetails {
     @Column(name = "role", columnDefinition="enum('USER','ADMIN')")
     private Role role;
 
+    @OneToMany(mappedBy = "user")
+    private List<UserEvent> userEvents;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
