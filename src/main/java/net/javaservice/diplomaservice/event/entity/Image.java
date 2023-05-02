@@ -14,8 +14,10 @@ import lombok.*;
 public class Image {
     @Id
     private int id;
-    @Column(name = "image_data")
-    private String imageData;
+
+    @Lob
+    @Column(name = "image_data", length = 100000)
+    private byte[] imageData;
 
     @ManyToOne(targetEntity = Event.class)
     @JoinColumn(name="event_id")

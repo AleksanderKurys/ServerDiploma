@@ -92,7 +92,7 @@ public class UserService {
         eventResponse.setDatetime(event.getDatetime());
         eventResponse.setLatitude(event.getLatitude());
         eventResponse.setLongitude(event.getLongitude());
-        eventResponse.setCount_person(event.getCountPerson());
+        eventResponse.setCountPeopleMax(event.getCountMax());
         eventResponse.setTags(tagResponses);
         eventResponse.setImages(imageResponses);
         return eventResponse;

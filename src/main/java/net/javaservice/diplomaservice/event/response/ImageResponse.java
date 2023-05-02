@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ImageResponse {
     private Integer id;
-    private String imageData;
+    private byte[] imageData;
 }

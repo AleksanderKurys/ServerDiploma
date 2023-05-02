@@ -1,9 +1,13 @@
 package net.javaservice.diplomaservice.event.service;
 
 import lombok.RequiredArgsConstructor;
-import net.javaservice.diplomaservice.authorization.repository.UserRepository;
 import net.javaservice.diplomaservice.event.entity.Event;
+import net.javaservice.diplomaservice.event.entity.Image;
+import net.javaservice.diplomaservice.event.entity.Tag;
 import net.javaservice.diplomaservice.event.repository.EventRepository;
+import net.javaservice.diplomaservice.event.repository.ImageRepository;
+import net.javaservice.diplomaservice.event.repository.TagRepository;
+import net.javaservice.diplomaservice.event.request.EventRequest;
 import net.javaservice.diplomaservice.event.response.EventResponse;
 import net.javaservice.diplomaservice.event.response.ImageResponse;
 import net.javaservice.diplomaservice.event.response.TagResponse;
@@ -11,20 +15,19 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class EventService {
 
-    private final EventRepository repository;
+    private final EventRepository eventRepository;
+    private final ImageRepository imageRepository;
+    private final TagRepository tagRepository;
 
     public ArrayList<EventResponse> getEvents(Integer page, Integer size) {
         Pageable firstPageWithTwoElements = PageRequest.of(page, size);
-        var events = repository.findAll(firstPageWithTwoElements).toList();
+        var events = eventRepository.findAll(firstPageWithTwoElements).toList();
 
         ArrayList<EventResponse> listEventResponse = new ArrayList<EventResponse>();
 
@@ -38,14 +41,14 @@ public class EventService {
     }
 
     public EventResponse getEvent(Integer id) {
-        var event = repository.findById(id);
+        var event = eventRepository.findById(id);
 
         return convertToEventResponse(event.get());
     }
 
 
     public ArrayList<EventResponse> searchEventOnText(String title) {
-        var events = repository.findByEventOnText(title);
+        var events = eventRepository.findByEventOnText(title);
         ArrayList<EventResponse> listEventResponse = new ArrayList<EventResponse>();
 
         for(int i=0; i<events.size(); i++) {
@@ -60,7 +63,7 @@ public class EventService {
         ArrayList<EventResponse> listEventResponse = new ArrayList<EventResponse>();
 
         for(int i = 0; i<tags.size(); i++) {
-            var event = repository.findByTags_Name(tags.get(i));
+            var event = eventRepository.findByTags_Name(tags.get(i));
 
             for(int j=0; j < event.size(); j++) {
                 listEventResponse.add(j, convertToEventResponse(event.get(j)));
@@ -102,9 +105,56 @@ public class EventService {
         eventResponse.setDatetime(event.getDatetime());
         eventResponse.setLatitude(event.getLatitude());
         eventResponse.setLongitude(event.getLongitude());
-        eventResponse.setCount_person(event.getCountPerson());
+        eventResponse.setCountPeopleMax(event.getCountMax());
+        eventResponse.setCountPeople(event.getCountPerson());
         eventResponse.setTags(tagResponses);
         eventResponse.setImages(imageResponses);
         return eventResponse;
+    }
+
+    public Boolean addEvent(EventRequest eventRequest) {
+        Event event = new Event();
+
+        event.setAvatar(eventRequest.getAvatar());
+        event.setDescription(eventRequest.getDescription());
+        event.setDatetime(eventRequest.getDatetime());
+        event.setCountMax(eventRequest.getCountPeopleMax());
+        event.setCountPerson(0);
+        event.setTitle(eventRequest.getTitle());
+        event.setLatitude(eventRequest.getLatitude());
+        event.setLongitude(eventRequest.getLongitude());
+
+        var newEvent = eventRepository.save(event);
+
+        return true;
+    }
+
+    public Boolean updateEvent(Integer id, EventRequest eventRequest) {
+        var event = eventRepository.findById(id).orElseThrow();
+        var tags = tagRepository.findAll();
+
+        ArrayList<Tag> needTags = new ArrayList<>();
+
+        tags.forEach(tag -> {
+            eventRequest.getTags().forEach(eventTag -> {
+                if (tag.getName().equals(eventTag.getName())) {
+                    needTags.add(tag);
+                }
+            });
+        });
+
+        event.setTags(needTags);
+        event.setAvatar(eventRequest.getAvatar());
+        event.setDescription(eventRequest.getDescription());
+        event.setDatetime(eventRequest.getDatetime());
+        event.setCountMax(eventRequest.getCountPeopleMax());
+        event.setCountPerson(0);
+        event.setTitle(eventRequest.getTitle());
+        event.setLatitude(eventRequest.getLatitude());
+        event.setLongitude(eventRequest.getLongitude());
+
+        var newEvent = eventRepository.save(event);
+
+        return true;
     }
 }
