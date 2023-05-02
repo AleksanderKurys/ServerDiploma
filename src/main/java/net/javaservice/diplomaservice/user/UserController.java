@@ -20,6 +20,7 @@ import java.util.Base64;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService service;
+
     @GetMapping("/getUser")
     public ResponseEntity<UserResponse> getUser(
             @RequestParam Integer id

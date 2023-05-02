@@ -5,7 +5,7 @@ create table _user (
     middlename varchar(255),
     course tinyint,
     department varchar(8),
-    avatar varchar(255),
+    avatar MEDIUMBLOB,
     email varchar(255),
     password varchar(255),
     role enum('USER','ADMIN')

@@ -64,6 +64,7 @@ public class UserService {
         return listEventResponse;
     }
 
+
     private EventResponse convertToEventResponse(Event event) {
         EventResponse eventResponse = new EventResponse();
         List<TagResponse> tagResponses = new ArrayList<TagResponse>();

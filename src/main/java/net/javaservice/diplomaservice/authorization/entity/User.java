@@ -26,7 +26,8 @@ public class User implements UserDetails {
     private String middlename;
     private Integer course;
     private String department;
-    private String avatar;
+    @Column(length = 100000)
+    private byte[] avatar;
     @Column(unique = true)
     private String email;
     private String password;

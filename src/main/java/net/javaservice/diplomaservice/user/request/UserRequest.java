@@ -15,6 +15,6 @@ public class UserRequest {
     private String middlename;
     private Integer course;
     private String department;
-    private String avatar;
+    private byte[] avatar;
     private String email;
 }
