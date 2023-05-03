@@ -34,11 +34,16 @@ public class AuthorizationService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
+                .middlename(request.getMiddlename())
+                .course(request.getCourse())
+                .department(request.getDepartment())
                 .build();
+
         repository.save(user);
         var token = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(token)
+                .role(user.getRole())
                 .build();
     }
 
@@ -54,6 +59,14 @@ public class AuthorizationService {
         var token = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(token)
+                .role(user.getRole())
                 .build();
     }
+
+
+    public Boolean checkEmail(String email) {
+        var user = repository.findByEmail(email);
+        return user.isPresent();
+    }
+
 }

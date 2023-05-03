@@ -27,4 +27,9 @@ public class AuthorizationController {
     ) {
         return ResponseEntity.ok(service.login(request));
     }
+
+    @GetMapping("/correctEmail")
+    public ResponseEntity<Boolean> checkEmail(@RequestParam String email) {
+        return ResponseEntity.ok(service.checkEmail(email));
+    }
 }
