@@ -1,6 +1,7 @@
 package net.javaservice.diplomaservice.user;
 
 import lombok.RequiredArgsConstructor;
+import net.javaservice.diplomaservice.event.response.AvatarResponse;
 import net.javaservice.diplomaservice.event.response.EventResponse;
 import net.javaservice.diplomaservice.user.request.UserRequest;
 import net.javaservice.diplomaservice.user.response.UserResponse;
@@ -9,9 +10,12 @@ import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
 import net.minidev.json.parser.ParseException;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 
@@ -27,6 +31,7 @@ public class UserController {
     ) {
         return ResponseEntity.ok(service.getUser(id));
     }
+
     @PutMapping("/updateUser")
     public ResponseEntity<Boolean> updateUser(
             @RequestBody UserRequest userRequest
@@ -44,6 +49,18 @@ public class UserController {
     public ResponseEntity<UserResponse> getUserWithToken(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) throws ParseException {
 
         return ResponseEntity.ok(service.getUserToEmail(parseToken(token)));
+    }
+
+    @PostMapping("/upload")
+    public ResponseEntity<Boolean> uploadAvatar(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestParam("image") MultipartFile image) throws ParseException, IOException {
+
+        return ResponseEntity.ok(service.uploadAvatar(image, parseToken(token)));
+    }
+
+    @GetMapping("/avatar")
+    public ResponseEntity<AvatarResponse> getAvatar(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) throws ParseException {
+        return ResponseEntity.status(HttpStatus.OK)
+                        .body(service.getAvatar(parseToken(token)));
     }
 
     private String parseToken(String token) throws ParseException {

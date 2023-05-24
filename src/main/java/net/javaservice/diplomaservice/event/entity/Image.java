@@ -13,6 +13,8 @@ import lombok.*;
 @Table(name = "_image")
 public class Image {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true, nullable = false)
     private int id;
 
     @Lob

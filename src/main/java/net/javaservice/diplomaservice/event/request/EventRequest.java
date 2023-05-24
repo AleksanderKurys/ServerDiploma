@@ -14,13 +14,14 @@ import java.util.List;
 @NoArgsConstructor
 public class EventRequest {
     private String title;
-    private String avatar;
+    private byte[] avatar;
     private Integer countPeopleMax;
     private Integer countPeople;
     private String description;
     private double latitude;
     private double longitude;
-    private LocalDateTime datetime;
+    private LocalDateTime startDateTime;
+    private LocalDateTime endDateTime;
     private List<TagRequest> tags;
     private List<ImageRequest> images;
 }

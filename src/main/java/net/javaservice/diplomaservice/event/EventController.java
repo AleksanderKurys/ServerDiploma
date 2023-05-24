@@ -5,12 +5,19 @@ import net.javaservice.diplomaservice.event.request.EventRequest;
 import net.javaservice.diplomaservice.event.response.EventResponse;
 import net.javaservice.diplomaservice.event.service.EventService;
 import net.javaservice.diplomaservice.event.service.ImageService;
+import net.minidev.json.JSONObject;
+import net.minidev.json.parser.JSONParser;
+import net.minidev.json.parser.ParseException;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @RestController
@@ -51,7 +58,7 @@ public class EventController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Boolean> addEvent(@RequestBody EventRequest request) {
+    public ResponseEntity<Integer> addEvent(@RequestBody EventRequest request) {
         return ResponseEntity.ok(service.addEvent(request));
     }
 
@@ -67,8 +74,35 @@ public class EventController {
     }
 
     @GetMapping("/download")
-    public ResponseEntity<ArrayList<byte[]>> downloadImage(@RequestParam Integer eventId) throws IOException {
-        ArrayList<byte[]> imageData = imageService.downloadImage(eventId);
-        return ResponseEntity.ok(imageData);
+    public ResponseEntity<byte[]> downloadImage(@RequestParam Integer eventId) throws IOException {
+        byte[] imageData = imageService.downloadImage(eventId);
+        return ResponseEntity.status(HttpStatus.OK)
+                .contentType(MediaType.valueOf("image/png"))
+                .body(imageData);
+    }
+    @GetMapping("/getCoordinate")
+    public ResponseEntity<List<EventResponse>> getCoordinate()  {
+        return ResponseEntity.ok(service.getCoordinate());
+    }
+
+    @PostMapping("/signUpEvent")
+    public ResponseEntity<Boolean> signUpEvent(@RequestParam Integer eventId,
+                                               @RequestHeader(HttpHeaders.AUTHORIZATION) String token) throws ParseException {
+        String email = parseToken(token);
+        return ResponseEntity.ok(service.signUpEvent(eventId, email));
+    }
+
+    private String parseToken(String token) throws ParseException {
+        String str = token.replace("Bearer ", "");
+        String[] newToken = str.split("\\.");
+
+        Base64.Decoder decoder = Base64.getUrlDecoder();
+
+        String payload = new String(decoder.decode(newToken[1]));
+
+        Object obj = new JSONParser().parse(payload);
+        JSONObject jo = (JSONObject) obj;
+        String email = (String) jo.get("sub");
+        return email;
     }
 }

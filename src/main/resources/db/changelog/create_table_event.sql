@@ -1,11 +1,12 @@
 create table _events (
     id int primary key AUTO_INCREMENT,
     title varchar(30),
-    avatar varchar(255),
+    avatar MEDIUMBLOB,
     count_person int,
     count_max int,
     description text,
     latitude float,
     longitude float,
-    _day datetime
+    day_start datetime,
+    day_end datetime
 );

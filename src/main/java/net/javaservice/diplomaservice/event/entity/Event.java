@@ -2,11 +2,11 @@ package net.javaservice.diplomaservice.event.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.Accessors;
 import net.javaservice.diplomaservice.authorization.entity.UserEvent;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +21,8 @@ public class Event {
     @Column(insertable = false)
     private int id;
     private String title;
-    private String avatar;
+    @Column(length = 100000)
+    private byte[] avatar;
     @Column(name = "count_person")
     private Integer countPerson;
     @Column(name = "count_max")
@@ -30,11 +31,15 @@ public class Event {
     private double latitude;
     private double longitude;
 
-    @Column(name = "_day")
+    @Column(name = "day_start")
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
-    private LocalDateTime datetime;
+    private Date startDateTime;
 
-    @OneToMany(mappedBy = "event")
+    @Column(name = "day_end")
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    private Date endDateTime;
+
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     private List<UserEvent> userEvent;
 
     @ManyToMany

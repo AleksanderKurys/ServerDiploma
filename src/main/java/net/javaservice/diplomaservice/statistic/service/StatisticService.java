@@ -11,12 +11,12 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class StatisticService {
 
     private final EventRepository repository;
@@ -25,10 +25,9 @@ public class StatisticService {
         endDate = endDate == null ? LocalDateTime.now() : endDate;
 
         var events = repository.findWhereBetween(
-                Date.from(startDate.toInstant(ZoneOffset.UTC)),
-                Date.from(endDate.toInstant(ZoneOffset.UTC))
+                Date.from(startDate.atZone(ZoneId.systemDefault()).toInstant()),
+                Date.from(endDate.atZone(ZoneId.systemDefault()).toInstant())
         );
-        var usersEvents= events.get(0).getUserEvent();
 
         var result = events.stream().flatMap(it -> it.getUserEvent().stream().filter(UserEvent::getIsVisited).map(UserEvent::getUser))
                 .map(it -> Pair.of(it.getDepartment(), 1))

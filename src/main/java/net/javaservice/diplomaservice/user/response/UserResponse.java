@@ -24,5 +24,4 @@ public class UserResponse {
     private String email;
     private String password;
     private Role role;
-    private List<EventResponse> events;
 }

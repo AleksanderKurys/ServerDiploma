@@ -43,15 +43,10 @@ public class ImageService {
 
         return null;
     }
-    public ArrayList<byte[]> downloadImage(Integer eventId) {
+    public byte[] downloadImage(Integer eventId) {
         ArrayList<Image> imageData = imageRepository.findByEventId(eventId);
-        ArrayList<byte[]> images = new ArrayList<>();
 
-        for(int i=0; i<imageData.size();i++) {
-            byte[] image = ImageUtils.decompressImage(imageData.get(i).getImageData());
-            images.add(image);
-        }
-
-        return images;
+        byte[] image = ImageUtils.decompressImage(imageData.get(1).getImageData());
+        return image;
     }
 }

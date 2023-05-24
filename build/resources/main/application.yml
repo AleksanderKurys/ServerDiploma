@@ -1,11 +1,16 @@
 spring:
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
   datasource:
-    url: jdbc:mysql://localhost:3307/diplomaServer
-    username: sacha
+    url: jdbc:mysql://localhost:3307/diplomaServer?sessionVariables=sql_mode='NO_ENGINE_SUBSTITUTION'&jdbcCompliantTruncation=false
+    username: root
     password: warface567
+    max-allowed-packet: 500MB
   jpa:
     hibernate:
       ddl-auto: validate
@@ -15,3 +20,8 @@ spring:
         hibernate:
             format_sql: true
     database: mysql
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace

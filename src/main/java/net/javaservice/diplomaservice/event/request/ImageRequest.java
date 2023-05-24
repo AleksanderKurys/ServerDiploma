@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ImageRequest {
-    private String imageData;
+    private byte[] imageData;
 }
