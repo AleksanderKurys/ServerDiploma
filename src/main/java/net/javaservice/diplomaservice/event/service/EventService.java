@@ -243,19 +243,21 @@ public class EventService {
     }
 
     public List<EventResponse> getCoordinate() {
-        LocalDate localDate = LocalDate.of(2024, 1, 1);
-        var events = eventRepository.findWhereBetween(
-                java.sql.Date.from(now().atZone(ZoneId.systemDefault()).toInstant()),
-                java.sql.Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+        LocalDate localDate = LocalDate.of(2025, 1, 1);
 
-        ArrayList<EventResponse> eventResponses = new ArrayList<>();
+        var events1 = eventRepository.findAll();
+        Date date = new Date(System.currentTimeMillis());
+        ArrayList<EventResponse> listEventResponse = new ArrayList<EventResponse>();
 
-        events.forEach(event -> {
-            EventResponse eventResponse = new EventResponse();
-            eventResponse = convertToEventResponse(event);
-            eventResponses.add(eventResponse);
-        });
-        return eventResponses;
+        for(int i=0;i<events1.size();i++) {
+            if (events1.get(i).getStartDateTime().after(date)) {
+                var event = events1.get(i);
+
+                listEventResponse.add(convertToEventResponse(event));
+            }
+        }
+
+        return listEventResponse;
     }
 
     public Boolean signUpEvent(Integer id, String email) {
@@ -267,24 +269,33 @@ public class EventService {
         userEvent.setDoubleIntPrimaryKey(DoubleIntPrimaryKey.builder()
                 .event_id(event.getId())
                 .user_id(user.getId()).build());
+
+        event.setCountPerson(event.getCountPerson()+1);
+
         userEvent.setUser(user);
         userEvent.setEvent(event);
         userEvent.setIsRegistered(true);
-        userEvent.setIsVisited(true);
+        userEvent.setIsVisited(false);
 
         userEventRepository.save(userEvent);
 
-//
-//        for (int i=0; i<event.getUserEvent().size(); i++) {
-//            if (id == event.getUserEvent().get(i).getEvent_id() && event.getUserEvent().get(i).getUser_id() == user.getId()) {
-//                event.getUserEvent().get(i).setIsRegistered(!event.getUserEvent().get(i).getIsRegistered());
-//                event.getUserEvent().get(i).setIsVisited(!event.getUserEvent().get(i).getIsVisited());
-//                state = event.getUserEvent().get(i).getIsRegistered();
-//                eventRepository.save(event);
-//                break;
-//            }
-//        }
-
         return true;
+    }
+
+    public Boolean unsubscribeEvent(Integer eventId, String email) {
+        var user = userRepository.findByEmail(email).orElseThrow();
+        var event = eventRepository.findById(eventId).orElseThrow();
+
+        for (int i=0; i<event.getUserEvent().size(); i++) {
+            if (eventId == event.getUserEvent().get(i).getEvent().getId() && event.getUserEvent().get(i).getUser().getId() == user.getId()) {
+                event.getUserEvent().get(i).setIsRegistered(!event.getUserEvent().get(i).getIsRegistered());
+                event.getUserEvent().get(i).setIsVisited(false);
+                event.setCountPerson(event.getCountPerson()-1);
+                eventRepository.save(event);
+                break;
+            }
+        }
+
+        return false;
     }
 }

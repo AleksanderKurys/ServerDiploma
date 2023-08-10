@@ -92,6 +92,13 @@ public class EventController {
         return ResponseEntity.ok(service.signUpEvent(eventId, email));
     }
 
+    @PostMapping("/unsubscribeEvent")
+    public ResponseEntity<Boolean> unsubscribeEvent(@RequestParam Integer eventId,
+                                               @RequestHeader(HttpHeaders.AUTHORIZATION) String token) throws ParseException {
+        String email = parseToken(token);
+        return ResponseEntity.ok(service.unsubscribeEvent(eventId, email));
+    }
+
     private String parseToken(String token) throws ParseException {
         String str = token.replace("Bearer ", "");
         String[] newToken = str.split("\\.");
